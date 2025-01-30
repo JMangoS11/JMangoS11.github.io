@@ -108,10 +108,13 @@
         ]
       };
 
+      var kids = {"Tyler Osit"};
+      var majors = {"cats"};
+      
        Object.values(colleges).flat().forEach(college => {
         L.marker(college.location, {icon: L.divIcon({className: 'red-dot', html: '🔴', iconSize: [10, 10]}) })
           .addTo(map)
-          .bindPopup(`<b>${college.name}</b><br>${college.students.join('<br>')}`);
+          .bindPopup(`<b>${college.name}</b><br>${college.students.join('<br>')}<br>${majors[0]}`);
       });
       
       fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
