@@ -11,6 +11,9 @@
   </head>
   <body>
     <h1>Students To Where</h1>
+    <div id="info" style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; width: 300px;">
+    <h3>Click a state to see students</h3>
+    </div>
     <div id="map"></div>
     <script src = "https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
@@ -20,12 +23,37 @@
       }).addTo(map);
 
       //some dots
-      var colleges = [
-        {name: "University of Michigan", location: [42.278, -83.738], student: "John Doe"},
-        {name: "Washington University in St. Louis", location: [38.648, -90.310], student: "Tyler Osit"}
-      ];
+      var colleges = {
+        "Michigan": [
+            { name: "University of Michigan", location: [42.278, -83.738], student: "John Doe" }
+        ],
+        "Missouri": [
+            { name: "Washington University in St. Louis", location: [38.648, -90.310], student: "Tyler Osit" }
+        ]
+      };
 
-      colleges.forEach(college => {
+      //Load GeoJSON
+      fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: {
+            color: "#555",
+            weight: 1,
+            fillOpacity: .1
+          },
+          onEachFeature: function(feature, layer) {
+            layer.on('click', function() {
+              let state = feature.properties.name;
+              let students = colleges[state] || [];
+              let studentList = students.map(s => '<li>${s.student} - ${s.name}<\li>').join('');
+              document.getElementById('info').innerHTML = '<h3>${state}</h3><ul>${studentList || "<li>No data</li>"}</ul>';
+            });
+          }
+        }).addTo(map);
+      });
+      
+      Object.values(colleges).flat().forEach(college => {
         L.marker(college.location, {icon: L.divIcon({className: 'red-dot', html: '🔴', iconSize: [10,10]}) })
           .addTo(map)
           .bindPopup('<b>%{college.student}</b><br>${college.name}')
