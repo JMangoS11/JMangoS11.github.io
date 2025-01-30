@@ -126,7 +126,7 @@
           onEachFeature: function(feature, layer) {
             layer.on('click', function() {
               let state = feature.properties.name;
-              let students = (colleges[state] || []).map(college => `<li>${college.students.join(', ')} - ${college.name}</li>`).join('');
+              let students = (colleges[state] || []).map(college => `<li>${college.students.join(', ')} - <b>${college.name}</b></li>`).join('');
               document.getElementById('info').innerHTML = `<h3>${state}</h3><ul>${students || "<li>No data</li>"}</ul>`;
             });
           }
