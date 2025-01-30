@@ -24,15 +24,33 @@
 
       //some dots
       var colleges = {
-        "Michigan": [
-            { name: "University of Michigan", location: [42.278, -83.738], student: "John Doe" }
-        ],
-        "Missouri": [
-            { name: "Washington University in St. Louis", location: [38.648, -90.310], student: "Tyler Osit" }
-        ]
+        "University of Michigan": { location: [42.278, -83.738], students: ["Student A", "Student B", "Student C"] },
+        "Washington University in St. Louis": { location: [38.648, -90.310], students: ["Student D"] },
+        "Cornell University": { location: [42.453, -76.473], students: ["Student E", "Student F", "Student G"] },
+        "Boston University": { location: [42.350, -71.105], students: ["Student H", "Student I", "Student J"] },
+        "Syracuse University": { location: [43.037, -76.134], students: ["Student K", "Student L", "Student M"] },
+        "Penn State University": { location: [40.798, -77.860], students: ["Student N"] },
+        "New York University": { location: [40.729, -73.996], students: ["Student O"] },
+        "The Cooper Union": { location: [40.729, -73.990], students: ["Student P"] },
+        "Emory University": { location: [33.792, -84.324], students: ["Student Q"] },
+        "Tulane University": { location: [29.940, -90.120], students: ["Student R", "Student S"] },
+        "University of Wisconsin": { location: [43.076, -89.412], students: ["Student T"] },
+        "University of Georgia": { location: [33.956, -83.377], students: ["Student U"] },
+        "Northwestern University": { location: [42.055, -87.673], students: ["Student V"] },
+        "University of Virginia": { location: [38.033, -78.507], students: ["Student W"] },
+        "Indiana University": { location: [39.166, -86.526], students: ["Student X"] },
+        "Florida Atlantic University": { location: [26.373, -80.101], students: ["Student Y"] },
+        "The Ohio State University": { location: [40.003, -83.016], students: ["Student Z"] },
+        "University of Miami": { location: [25.719, -80.278], students: ["Student AA"] }
       };
 
-      //Load GeoJSON
+       Object.keys(colleges).forEach(college => {
+        let data = colleges[college];
+        L.marker(data.location, {icon: L.divIcon({className: 'red-dot', html: '🔴', iconSize: [10, 10]}) })
+          .addTo(map)
+          .bindPopup(`<b>${college}</b><br>${data.students.join('<br>')}`);
+      });
+
       fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
       .then(response => response.json())
       .then(data => {
@@ -40,27 +58,20 @@
           style: {
             color: "#555",
             weight: 1,
-            fillOpacity: .1
+            fillOpacity: 0.1
           },
           onEachFeature: function(feature, layer) {
             layer.on('click', function() {
               let state = feature.properties.name;
-              let students = colleges[state] || [];
-              let studentList = students.map(s => `<li>${s.student} - ${s.name}</li>`).join('');
-              document.getElementById('info').innerHTML = `<h3>${state}</h3><ul>${studentList || "<li>No data</li>"}</ul>`;
+              let students = Object.entries(colleges)
+                .filter(([college, data]) => data.location && state.includes(college))
+                .map(([college, data]) => `<li>${data.students.join(', ')} - ${college}</li>`)
+                .join('');
+              document.getElementById('info').innerHTML = `<h3>${state}</h3><ul>${students || "<li>No data</li>"}</ul>`;
             });
           }
         }).addTo(map);
       });
-      
-      Object.values(colleges).flat().forEach(college => {
-        L.marker(college.location, {icon: L.divIcon({className: 'red-dot', html: '🔴', iconSize: [10,10]}) })
-          .addTo(map)
-          .bindPopup(`<b>${college.student}</b><br>${college.name}`);
-      });
-
-      
     </script>
-    
   </body>
 </html>
