@@ -50,12 +50,33 @@
         filter: invert(90%) hue-rotate(180deg);
       }
       button {
-        padding: 10px;
-        margin: 10px;
+        background-color: #c2fbd7;
+        border-radius: 100px;
+        box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
+          rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+          rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
+          rgba(44, 187, 99, 0.15) 0 16px 32px;
+        color: green;
         cursor: pointer;
-        border: 1px solid black;
-        background-color: lightgray;
-        transition: background 0.3s;
+        display: inline-block;
+        font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto,
+          sans-serif;
+        padding: 7px 20px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 250ms;
+        border: 0;
+        font-size: 16px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+      button:hover {
+        box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
+          rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
+          rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
+          rgba(44, 187, 99, 0.25) 0 16px 32px;
+        transform: scale(1.05) rotate(-1deg);
       }
       .dark-mode button {
         background-color: darkgray;
@@ -81,17 +102,7 @@
         color: #00b4cc;
       }
 
-      .searchButton {
-        width: 40px;
-        height: 36px;
-        border: 1px solid #00b4cc;
-        background: #00b4cc;
-        text-align: center;
-        color: #fff;
-        border-radius: 0 5px 5px 0;
-        cursor: pointer;
-        font-size: 20px;
-      }
+     
       .button-group {
         display: flex;
         flex-direction: column;
@@ -99,17 +110,26 @@
       }
 
       .button-group .button {
-        margin: 0;
-        width: 150px;
-        padding: 10px;
-        border: 1px solid black;
-        border-radius: 5px 5px 5px 5px;
-        background-color: #53c6ca;
-        color: #fff;
+        background-color: #c2fbd7;
+        border-radius: 100px;
+        box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
+          rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+          rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
+          rgba(44, 187, 99, 0.15) 0 16px 32px;
+        color: green;
+        cursor: pointer;
+        display: inline-block;
+        font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto,
+          sans-serif;
+        padding: 7px 20px;
         text-align: center;
         text-decoration: none;
+        transition: all 250ms;
+        border: 0;
         font-size: 16px;
-        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
       }
 
       .button-group .button:not(:last-child) {
@@ -117,7 +137,11 @@
       }
 
       .button-group .button:hover {
-        background-color: #2980b9;
+        box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
+          rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
+          rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
+          rgba(44, 187, 99, 0.25) 0 16px 32px;
+        transform: scale(1.05) rotate(-1deg);
       }
     </style>
   </head>
