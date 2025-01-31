@@ -6,29 +6,57 @@
     <title>College Kids</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        display: flex;
+        gap: 20px;
+      }
+      .left-column {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+      }
+
+      #info {
+        padding: 10px;
+        border: 1px solid #ddd;
+        width: 100%;
+      }
+
       #map {
         height: 600px;
+        width: 101.6%;
+      }
+
+      .right-column {
         width: 50%;
+        padding: 10px;
+        border: 1px solid #ddd;
       }
     </style>
   </head>
   <body>
     <h1>Students To Where</h1>
-    <div
-      id="info"
-      style="
-        margin-top: 10px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        width: 681px;
-      "
-    >
-      <h3>Click a state to see students</h3>
+
+    <div class="container">
+      <div class="left-column">
+        <div id="info">
+          <h3>Click a state to see students</h3>
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <div class="right-column">
+        <h3>Testing</h3>
+        <p>middle text</p>
+      </div>
     </div>
-    <div id="map"></div>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-      var map = L.map("map").setView([37.8, -96], 4); //should be the center
+      var map = L.map("map").setView([37.8, -96], 4);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "&copy; OpenStreetMap contributors",
       }).addTo(map);
@@ -73,7 +101,7 @@
             name: "Syracuse University",
             location: [43.037, -76.134],
             students: [
-              "Jake Halperin",
+              "Jake Halprerin",
               "Max Cohen",
               "Max Shukat",
               "Allison Mandell",
