@@ -808,12 +808,11 @@
             btn.className = "button";
             btn.innerHTML = item;
             btn.addEventListener("click", function () {
-              markers[collegeNames[item]].openPopup();
+              markers[item].openPopup();
             });
             document.getElementById("name-buttons").appendChild(btn);
           });
         }
-        console.log(names);
       }
     </script>
   </body>
