@@ -61,6 +61,64 @@
         background-color: darkgray;
         border: 1px solid white;
       }
+      .search {
+        width: 100%;
+        position: relative;
+        display: flex;
+      }
+
+      .searchTerm {
+        width: 100%;
+        border: 3px solid #00b4cc;
+        padding: 5px;
+        height: 20px;
+        border-radius: 5px 5px 5px 5px;
+        outline: none;
+        color: #9dbfaf;
+      }
+
+      .searchTerm:focus {
+        color: #00b4cc;
+      }
+
+      .searchButton {
+        width: 40px;
+        height: 36px;
+        border: 1px solid #00b4cc;
+        background: #00b4cc;
+        text-align: center;
+        color: #fff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button-group .button {
+        margin: 0;
+        width: 150px;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px 5px 5px 5px;
+        background-color: #53c6ca;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .button-group .button:not(:last-child) {
+        border-bottom: 15px;
+      }
+
+      .button-group .button:hover {
+        background-color: #2980b9;
+      }
     </style>
   </head>
   <body>
@@ -77,8 +135,21 @@
       </div>
 
       <div class="right-column">
-        <button id="Testing-Bind">Testing Bind</button>
         <h3>Testing</h3>
+        <div>
+          <div class="search">
+            <input
+              type="text"
+              class="searchTerm"
+              placeholder="Who are you looking for?"
+              onchange
+              onpropertychange
+              onkeyuponpaste
+              oninput="searchUpdate(this.value)"
+            />
+          </div>
+        </div>
+        <div id="name-buttons" class="button-group"></div>
         <p>middle text</p>
       </div>
     </div>
@@ -533,10 +604,84 @@
         "Personal Finance",
       ];
 
-      var collegeNames = ["High Point University","Muhlenberg College","St. John's University","Rochester Institute of Technology","Villonova","Holy Family University","Tulane University","Tulane University","Tulane University","Tulane University","Tulane University","Tulane University","University of Georgia","New York Institute of Technology","Marist College","Emory University","New York University","The Cooper Union","Rhode Island School of Design","Boston University","Boston University","Northeastern University","Cornell University","Boston University","Cornell University","Cornell University","Cornell University","Cornell University","Boston University","Boston University","Cornell University","Washington University in St. Louis","Western Connecticut State University","University of Miami","Lehigh University","Lehigh University","University of Virginia","Bentley University","Lehigh University","Bates College","Davidson College","Suny Cortland","George Washington University","Parsons School of Design","George Washington University","Suny New Paltz","Babson College","Northwestern University","Syracuse University","Syracuse University","Syracuse University","Syracuse University","Syracuse University","Syracuse University","Syracuse University","Syracuse University","Columbia University","Penn State University","University of Pennsylvania","Rochester Institute of Technology","Clemson University","Florida Atlantic University","University of Michigan","University of Michigan","University of Michigan","The Ohio State University","Indiana University","University of Michigan","University of Michigan","The Ohio State University","University of Colorado Boulder","University of Michigan","University of Wisconsin","University of Wisconsin"];
+      var collegeNames = [
+        "High Point University",
+        "Muhlenberg College",
+        "St. John's University",
+        "Rochester Institute of Technology",
+        "Villonova",
+        "Holy Family University",
+        "Tulane University",
+        "Tulane University",
+        "Tulane University",
+        "Tulane University",
+        "Tulane University",
+        "Tulane University",
+        "University of Georgia",
+        "New York Institute of Technology",
+        "Marist College",
+        "Emory University",
+        "New York University",
+        "The Cooper Union",
+        "Rhode Island School of Design",
+        "Boston University",
+        "Boston University",
+        "Northeastern University",
+        "Cornell University",
+        "Boston University",
+        "Cornell University",
+        "Cornell University",
+        "Cornell University",
+        "Cornell University",
+        "Boston University",
+        "Boston University",
+        "Cornell University",
+        "Washington University in St. Louis",
+        "Western Connecticut State University",
+        "University of Miami",
+        "Lehigh University",
+        "Lehigh University",
+        "University of Virginia",
+        "Bentley University",
+        "Lehigh University",
+        "Bates College",
+        "Davidson College",
+        "Suny Cortland",
+        "George Washington University",
+        "Parsons School of Design",
+        "George Washington University",
+        "Suny New Paltz",
+        "Babson College",
+        "Northwestern University",
+        "Syracuse University",
+        "Syracuse University",
+        "Syracuse University",
+        "Syracuse University",
+        "Syracuse University",
+        "Syracuse University",
+        "Syracuse University",
+        "Syracuse University",
+        "Columbia University",
+        "Penn State University",
+        "University of Pennsylvania",
+        "Rochester Institute of Technology",
+        "Clemson University",
+        "Florida Atlantic University",
+        "University of Michigan",
+        "University of Michigan",
+        "University of Michigan",
+        "The Ohio State University",
+        "Indiana University",
+        "University of Michigan",
+        "University of Michigan",
+        "The Ohio State University",
+        "University of Colorado Boulder",
+        "University of Michigan",
+        "University of Wisconsin",
+        "University of Wisconsin",
+      ];
 
-      var markers = [];
-      
+      var markers = {};
 
       Object.values(colleges)
         .flat()
@@ -548,7 +693,6 @@
                 1 + college.students.length / 10
               })">🔴</span>`,
               iconSize: [10, 10],
-
             }),
           })
 
@@ -564,7 +708,7 @@
                 })
                 .join("<br>")}`
             );
-            markers.push(marker);
+          markers[college.name] = marker;
         });
 
       fetch(
@@ -611,16 +755,28 @@
             localStorage.setItem("theme", "light");
           }
         });
-
       // Load user preference
       if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
       }
-      document
-        .getElementById("Testing-Bind")
-        .addEventListener("click", function () {
-          markers[0].openPopup();
-        });
+      function searchUpdate(text) {
+        const names = kids.filter((item) =>
+          item.toLowerCase().includes(text.toLowerCase())
+        );
+        document.getElementById("name-buttons").innerHTML = "";
+        if (text !== "") {
+          names.forEach((item) => {
+            var btn = document.createElement("button");
+            btn.className = "button";
+            btn.innerHTML = item;
+            btn.addEventListener("click", function () {
+              markers[collegeNames[kids.indexOf(item)]].openPopup();
+            });
+            document.getElementById("name-buttons").appendChild(btn);
+          });
+        }
+        console.log(names);
+      }
     </script>
   </body>
 </html>
