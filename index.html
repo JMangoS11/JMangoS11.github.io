@@ -41,11 +41,11 @@
         padding: 10px;
         border: 1px solid #ddd;
       }
-      body.dark-mode{
+      body.dark-mode {
         background-color: #222;
         color: #fff;
       }
-      
+
       .dark-mode .leaflet-container {
         filter: invert(90%) hue-rotate(180deg);
       }
@@ -61,11 +61,9 @@
         background-color: darkgray;
         border: 1px solid white;
       }
-
     </style>
   </head>
   <body>
-
     <button id="toggle-theme">Theme</button>
 
     <h1>Students To Where</h1>
@@ -79,6 +77,7 @@
       </div>
 
       <div class="right-column">
+        <button id="Testing-Bind">Testing Bind</button>
         <h3>Testing</h3>
         <p>middle text</p>
       </div>
@@ -534,16 +533,23 @@
         "Personal Finance",
       ];
 
+      var markers = [];
+      
+
       Object.values(colleges)
         .flat()
         .forEach((college) => {
-          L.marker(college.location, {
+          const marker = L.marker(college.location, {
             icon: L.divIcon({
               className: "red-dot",
-              html: `<span style="opacity: .7; display: inline-block; transform: scale(${1 + college.students.length / 10})">🔴</span>`,
+              html: `<span style="opacity: .7; display: inline-block; transform: scale(${
+                1 + college.students.length / 10
+              })">🔴</span>`,
               iconSize: [10, 10],
+
             }),
           })
+
             .addTo(map)
             .bindPopup(
               // `<b>${college.name}</b><br>${college.students.join("<br>")}`
@@ -556,6 +562,7 @@
                 })
                 .join("<br>")}`
             );
+            markers.push(marker);
         });
 
       fetch(
@@ -590,7 +597,9 @@
           }).addTo(map);
         });
 
-        document.getElementById("toggle-theme").addEventListener("click", function () {
+      document
+        .getElementById("toggle-theme")
+        .addEventListener("click", function () {
           document.body.classList.toggle("dark-mode");
 
           // Save preference in local storage
@@ -601,10 +610,15 @@
           }
         });
 
-          // Load user preference
-        if (localStorage.getItem("theme") === "dark") {
-          document.body.classList.add("dark-mode");
-        }
+      // Load user preference
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+      document
+        .getElementById("Testing-Bind")
+        .addEventListener("click", function () {
+          markers[0].openPopup();
+        });
     </script>
   </body>
 </html>
