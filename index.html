@@ -102,7 +102,6 @@
         color: #00b4cc;
       }
 
-     
       .button-group {
         display: flex;
         flex-direction: column;
@@ -165,7 +164,7 @@
             <input
               type="text"
               class="searchTerm"
-              placeholder="Who are you looking for?"
+              placeholder="Search..."
               onchange
               onpropertychange
               onkeyuponpaste
@@ -787,6 +786,9 @@
         const names = kids.filter((item) =>
           item.toLowerCase().includes(text.toLowerCase())
         );
+        const collegeMatches = collegeNames.filter((item) =>
+          item.toLowerCase().includes(text.toLowerCase())
+        );
         document.getElementById("name-buttons").innerHTML = "";
         if (text !== "") {
           names.forEach((item) => {
@@ -795,6 +797,18 @@
             btn.innerHTML = item;
             btn.addEventListener("click", function () {
               markers[collegeNames[kids.indexOf(item)]].openPopup();
+            });
+            document.getElementById("name-buttons").appendChild(btn);
+          });
+          var colls = collegeMatches.filter(
+            (value, index, array) => array.indexOf(value) === index
+          );
+          colls.forEach((item) => {
+            var btn = document.createElement("button");
+            btn.className = "button";
+            btn.innerHTML = item;
+            btn.addEventListener("click", function () {
+              markers[collegeNames[item]].openPopup();
             });
             document.getElementById("name-buttons").appendChild(btn);
           });
